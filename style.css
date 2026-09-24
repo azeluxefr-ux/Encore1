@@ -1,0 +1,521 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --bg: #09090f;
+  --text: #f7f7fb;
+  --muted: #858593;
+  --accent: #a855f7;
+  --accent2: #ec4899;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+button {
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 560px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(168, 85, 247, .18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(236, 72, 153, .10),
+      transparent 35%
+    ),
+    var(--bg);
+}
+
+#app::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+
+/* SCREENS */
+
+.screen {
+  position: absolute;
+  inset: 0;
+
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    calc(env(safe-area-inset-top) + 24px)
+    22px
+    calc(env(safe-area-inset-bottom) + 24px);
+
+  z-index: 1;
+}
+
+.screen.active {
+  display: flex;
+}
+
+
+/* MENU */
+
+.logo {
+  font-size: clamp(42px, 14vw, 74px);
+
+  font-weight: 900;
+
+  letter-spacing: -4px;
+
+  line-height: .9;
+
+  text-shadow:
+    0 0 35px rgba(168, 85, 247, .35);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.tagline {
+  color: var(--muted);
+
+  margin: 18px 0 42px;
+
+  text-align: center;
+
+  font-size: 15px;
+}
+
+
+/* BUTTON */
+
+.main-btn {
+  min-width: 210px;
+  min-height: 62px;
+
+  padding: 0 30px;
+
+  border-radius: 18px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+  font-size: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent2)
+    );
+
+  box-shadow:
+    0 12px 35px rgba(168, 85, 247, .30);
+
+  transition:
+    transform .12s ease;
+}
+
+.main-btn:active {
+  transform: scale(.95);
+}
+
+.secondary-btn {
+  margin-top: 12px;
+
+  background: transparent;
+
+  color: var(--muted);
+
+  padding: 12px 24px;
+
+  font-size: 14px;
+}
+
+.best-label {
+  margin-top: 34px;
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+  letter-spacing: 1.5px;
+}
+
+.best-label strong {
+  color: white;
+
+  margin-left: 7px;
+}
+
+
+/* GAME */
+
+#game {
+  justify-content: flex-start;
+
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.hud {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  padding-top: 4px;
+
+  z-index: 3;
+}
+
+.hud > div {
+  text-align: center;
+}
+
+.hud > div:first-child {
+  text-align: left;
+}
+
+.hud > div:last-child {
+  text-align: right;
+}
+
+.hud small {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.hud strong {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 23px;
+
+  font-weight: 900;
+}
+
+.combo strong {
+  color: var(--accent);
+}
+
+
+/* ARENA */
+
+#arena {
+  position: relative;
+
+  width: 100%;
+
+  flex: 1;
+
+  min-height: 0;
+
+  margin-top: 15px;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+
+  border:
+    1px solid rgba(255,255,255,.06);
+
+  background:
+    rgba(255,255,255,.018);
+}
+
+
+/* TARGET */
+
+#target {
+  position: absolute;
+
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #fff 0 7%,
+      #f0abfc 8% 20%,
+      #a855f7 35%,
+      #7e22ce 72%,
+      #581c87 100%
+    );
+
+  box-shadow:
+    0 0 0 7px rgba(168,85,247,.10),
+    0 0 28px rgba(168,85,247,.85);
+
+  transform:
+    translate(-50%, -50%)
+    scale(1);
+
+  transition:
+    transform .1s ease;
+}
+
+#target::after {
+  content: "";
+
+  position: absolute;
+
+  inset: -13px;
+
+  border:
+    2px solid rgba(236,72,153,.35);
+
+  border-radius: 50%;
+
+  animation:
+    pulse 1s infinite ease-out;
+}
+
+#target:active {
+  transform:
+    translate(-50%, -50%)
+    scale(.82);
+}
+
+@keyframes pulse {
+
+  0% {
+    transform: scale(.75);
+    opacity: .8;
+  }
+
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+
+}
+
+
+/* TIMER */
+
+.progress-wrap {
+  width: calc(100% - 14px);
+
+  height: 5px;
+
+  margin: 13px 7px 0;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,.08);
+}
+
+#progress {
+  height: 100%;
+
+  width: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--accent),
+      var(--accent2)
+    );
+
+  transform-origin:
+    left center;
+}
+
+.hint {
+  margin: 10px 0 0;
+
+  color: #686875;
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+
+/* SCORE POPUP */
+
+.message {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  pointer-events: none;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 30px;
+
+  font-weight: 900;
+
+  opacity: 0;
+
+  z-index: 2;
+}
+
+.message.show {
+  animation:
+    pop .45s ease-out forwards;
+}
+
+@keyframes pop {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -30%)
+      scale(.6);
+  }
+
+  30% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.15);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -80%)
+      scale(1);
+  }
+
+}
+
+
+/* GAME OVER */
+
+#gameOver {
+  text-align: center;
+}
+
+.over-title {
+  color: var(--muted);
+
+  font-size: 12px;
+
+  letter-spacing: 3px;
+
+  font-weight: 800;
+}
+
+.final-score {
+  margin: 4px 0 2px;
+
+  font-size: 96px;
+
+  line-height: 1;
+
+  font-weight: 950;
+
+  letter-spacing: -6px;
+}
+
+.record {
+  min-height: 20px;
+
+  margin: 0 0 34px;
+
+  color: #f0abfc;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 600px) {
+
+  #app {
+    max-width: 480px;
+
+    margin: auto;
+
+    border-left:
+      1px solid rgba(255,255,255,.05);
+
+    border-right:
+      1px solid rgba(255,255,255,.05);
+  }
+
+}
